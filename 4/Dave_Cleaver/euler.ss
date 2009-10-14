@@ -37,6 +37,6 @@
                (j start))
       (cond
         ((< i end) #f)
-        ((< j end) (loop (- i 1) start))
+        ((< j end) (loop (- i 1) (- i 1)))
         ((palindrome? (* i j)) (values (* i j) i j))
         (#t (loop i (- j 1)))))))
