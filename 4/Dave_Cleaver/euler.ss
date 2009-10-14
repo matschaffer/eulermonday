@@ -35,8 +35,9 @@
         (end (lowest-value n)))
     (let loop ((i start)
                (j start))
+      (if (<= j i) (printf "i: ~a j: ~a i*j: ~a i+j: ~a\n" i j (* i j) (+ i j)))
       (cond
         ((< i end) #f)
-        ((< j end) (loop (- i 1) (- i 1)))
+        ((< i j) (loop start (- j 1)))
         ((palindrome? (* i j)) (values (* i j) i j))
-        (#t (loop i (- j 1)))))))
+        (#t (loop (- i 1) j))))))
