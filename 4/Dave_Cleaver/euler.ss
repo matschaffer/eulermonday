@@ -34,10 +34,10 @@
   (let ((start (highest-value n))
         (end (lowest-value n)))
     (let loop ((i start)
-               (j start))
-      (if (<= j i) (printf "i: ~a j: ~a i*j: ~a i+j: ~a\n" i j (* i j) (+ i j)))
-      (cond
-        ((< i end) #f)
-        ((< i j) (loop start (- j 1)))
-        ((palindrome? (* i j)) (values (* i j) i j))
-        (#t (loop (- i 1) j))))))
+               (sum (+ start start)))
+      (let ((j (- sum i)))
+        (cond
+          ((< sum (+ end end)) #f)
+          ((< i j) (loop start (- sum 1)))
+          ((palindrome? (* i j)) (values (* i j) i j))
+          (#t (loop (- i 1) sum)))))))
