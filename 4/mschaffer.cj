@@ -1,22 +1,20 @@
 (defn pow [n e]
-  (if (zero? e)
-    1
-    (* n (pow n (dec e)))))
+  (loop [n n e e acc 1]
+    (if (zero? e)
+      acc
+      (recur n (dec e) (* n acc)))))
 
-(defn as-seq [subject] 
-  (list* (str subject)))
-
-(defn palendrome? [subject] 
-  (= (as-seq subject) (reverse (as-seq subject))))
+(defn palendrome? [subject]
+  (let [subject (list* (str subject))]
+    (= subject (reverse subject))))
 
 (defn euler4 [n]
-  (let [max (pow 10 n)]
-    (def palendromes '())
-    (dotimes [i max]
-      (dotimes [j max]
+  (let [min (pow 10 (dec n))
+        max (pow 10 n)
+        items (range min max)]
+    (last (sort
+      (for [i items j items]
         (let [product (* i j)]
-          (if (and (palendrome? product) (not (zero? product)))
-            (def palendromes (conj palendromes product))))))
-    (last (sort palendromes))))
+          (if (palendrome? product) product 0)))))))
 
 (println (euler4 3))
