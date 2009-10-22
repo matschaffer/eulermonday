@@ -18,6 +18,12 @@
 
 
 def find_sum_of_even_terms(limit)
+  if(limit<2)
+    return 0
+  end
+  if(limit<8)
+    return 2
+  end
   second_last_even_number = 2
   last_even_number = 8
   current_number = 4*last_even_number+second_last_even_number
