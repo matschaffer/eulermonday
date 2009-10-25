@@ -24,4 +24,5 @@
 
 (euler2 4000000)
 
-
+; one-liner for good measure
+(def fibs (lazy-cat '(0 1) (map + fibs (rest fibs)))) (reduce + (filter even? (take-while #(< % 4000000) fibs)))
