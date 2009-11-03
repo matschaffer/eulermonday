@@ -11,24 +11,23 @@
 
 big_number = 7316717653133062491922511967442657474235534919493496983520312774506326239578318016984801869478851843858615607891129494954595017379583319528532088055111254069874715852386305071569329096329522744304355766896648950445244523161731856403098711121722383113622298934233803081353362766142828064444866452387493035890729629049156044077239071381051585930796086670172427121883998797908792274921901699720888093776657273330010533678812202354218097512545405947522435258490771167055601360483958644670632441572215539753697817977846174064955149290862569321978468622482839722413756570560574902614079729686524145351004748216637048440319989000889524345065854122758866688116427171479924442928230863465674813919123162824586178664583591245665294765456828489128831426076900422421902267105562632111110937054421750694165896040807198403850962455444362981230987879927244284909188845801561660979191338754992005240636899125607176060588611646710940507754100225698315520005593572972571636269561882670428252483600823257530420752963450
 
-big_number_array = big_number.to_s.split('') # break into an array of single digits
-
-def find_greatest_product(numbers)
-  products = Array.new # holds numbers for multiplying  
-  while numbers.length > 5 # as long as the array_of_numbers has 5 numbers
-    multiples = numbers[0..4].to_s.split('') # get next five numbers
-    mult = 1 # base of 1 to start multiplying against
+def find_greatest_product(number)
+  digits = number.to_s.split('')
+  products = Array.new
+  while digits.length > 5
+    multiples = digits[0..4].to_s.split('')
+    mult = 1
     while multiples.empty? != true
-      mult = mult * multiples[0] .to_i # does the multiplication
-      multiples.shift # removes that number we just multiplied
+      mult = mult * multiples[0] .to_i 
+      multiples.shift 
     end  
-    products << mult # adds the product of that set to the products array
-    numbers.shift # remove the first number from the array and do it again
+    products << mult 
+    digits.shift 
   end
-  answer = products.sort {|x,y| y <=> x } # sort the answers greatest to smallest
+  answer = products.sort {|x,y| y <=> x } 
   p "Your answer, sir, is " + answer[0].to_s
 end
 
 # start = Time.now
-find_greatest_product(big_number_array)
+find_greatest_product(big_number)
 # puts "Took: #{Time.now - start} seconds"
