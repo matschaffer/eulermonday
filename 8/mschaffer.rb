@@ -1,4 +1,4 @@
-number = File.read('problem.txt').scan(/^\d+/).join
+number = File.read(File.join(File.dirname(__FILE__), 'problem.txt')).scan(/^\d+/).join
 
 products = []
 
