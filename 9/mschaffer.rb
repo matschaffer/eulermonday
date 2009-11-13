@@ -20,10 +20,12 @@
 
 apocalypse = lambda { |a, b| a * b }
 
-for satan in 2..1000
-  for jesus in 2..1000
+for satan in 3..998
+  for jesus in 3..(998 - satan)
     if 2000 * satan + 2000 * jesus - 2 * satan * jesus == 1_000_000
-      puts [satan, jesus, Math.sqrt(satan**2 + jesus**2).to_i].inject &apocalypse
+      masses = [satan, jesus, Math.sqrt(satan**2 + jesus**2).to_i]
+      p masses
+      puts masses.inject &apocalypse
       abort
     end
   end
