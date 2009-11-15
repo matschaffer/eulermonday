@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# These implement Euclid Formula which will generate the triple based on 
+# These implement Euclid's Formula which will generate the triple based on 
 # two positive integers m and n.
 #  m > n
 fa = lambda m, n: 2 * m * n
