@@ -1,0 +1,1 @@
+puts (2**1000).to_s.scan(/./).map(&:to_i).reduce(&:+)
