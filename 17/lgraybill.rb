@@ -12,25 +12,13 @@
 # when writing out numbers is in compliance with British usage.
 
 our_number = 0
-write_out_number = lambda { |n|
+euler_17 = lambda { |n|
   
   english = ""
   
   # use some wicked regex to write out the numbers to names
   n_string = n.to_s
   n_length = n_string.length.to_s
-
-  # if n_string.length == 1, it's a single digit, don't append anything
-  # if n_string.length == 2 ** /^1/, eleven, twelve, and then append "teen"
-  # if n_string.length == 2 ** /^2/, prepend "twenty"
-  # /^3/, prepend "thirty"
-  # /^4/, prepend "forty"
-  # /^5/, prepend "fifty"
-  # /^6/, prepend "sixty"
-  # /^7/, prepend "seventy"
-  # /^8/, prepend "eighty"
-  # /^9/, prepend "ninety"
-  # if n_string.length == 3, append "hundred"
 
   # Assign the single number (1, 2, 3, 4, 5, 6...)
   assign_singleton_number = lambda { |n|
@@ -55,51 +43,41 @@ write_out_number = lambda { |n|
     else
       english = "oh poop"     
     end
-
-
-    if n_string.length > 1
-
-      lambda { |n| 
-
-        if n_length == 2
-          english = english + "teen"
-
-        end
-        if n_string.length >= 2
-          lambda { |n|
-              if n_length >= 3
-
-                english = english + "hundred"
-                if n_length >= 4
-                  lambda { |n|  
-                    if n_length == 4
-                      english = english + "thousand"
-                    end
-                  }
-                  
-                end
-              end
-          }
-
-        end
-  
-      }
-
-    end
+    puts "from single: " + english
   }
+  assign_duple_number = lambda { |n|
+    p "assign_duple_number"
+  }
+  
+  assign_triple_number = lambda { |n| 
+    p "assign_triple_number"
+  }
+  
+  add_this_shit_up = lambda {|english|
+    puts "add_this_shit_up english: " + english
+    our_number = our_number + english.length
+  }
+  
+  lets_build_this_number = lambda { |n|
+    # puts "inside lets_build_this_number"
+    # puts "n_length = " + n_length 
+    if n_length = 1
+      assign_singleton_number[n]
+    elsif n_length = 2
+      assign_duple_number
+    elsif n_length = 3
+      assign_triple_number
+    elsif n_length = 4
+      
+    end
+    add_this_shit_up[english]
+  }
+  lets_build_this_number[n]
 
-  # Should it have a single_num() { returns one, two, three...}
-  # duple_num(){ returns eleven, twelve, teen, twenty, thirty, forty, fifty...}
-  # triple_num(){ returns single_num() + hundred}
-
-  assign_singleton_number[n]
-
-  our_number = our_number + english.length
 }
 
 
-
 (1..5).each do |n|
-  write_out_number[n]
+  euler_17[n]
 end
 puts "the answer:" + our_number.to_s
