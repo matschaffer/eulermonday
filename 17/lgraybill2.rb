@@ -11,82 +11,104 @@
 # contains 23 letters and 115 (one hundred and fifteen) contains 20 letters. The use of "and" 
 # when writing out numbers is in compliance with British usage.
 
-class NumberInEnglish
-  attr_accessor :sum, :english
-  def initialize(min, max, sum)
+class NumberAsWord
+  attr_accessor :sum, :num_as_word
+  def initialize(min, max)
     @range = (min..max)
-    @sum = sum
-    @english = english
+    @sum = 0
+    @num_as_word = num_as_word
+    @current_num 
+    @tmp_num
     (@range).each do |n|
-      build_words(n)
+      @current_num = n
+      build_words(@current_num)
     end
   end
+  
+  # Set variables
   def sum=(set_sum)
     @sum = set_sum
   end
-  def english=(set_english)
-    english = set_english
+  def num_as_word=(set_num_as_word)
+    num_as_word = set_num_as_word
   end
+  
   def gen_single(num)
     n_s = num.to_s
     #  could this be a hash table?
-    if n_s =~ /^1/ then @english = "one"    
-    elsif n_s =~ /^2/ then @english = "two"
-    elsif n_s =~ /^3/ then @english = "three"
-    elsif n_s =~ /^4/ then @english = "four"  
-    elsif n_s =~ /^5/ then @english = "five"
-    elsif n_s =~ /^6/ then @english = "six"  
-    elsif n_s =~ /^7/ then @english = "seven"
-    elsif n_s =~ /^8/ then @english = "eight"
-    elsif n_s =~ /^9/ then @english = "nine"
+    if n_s =~ /^1/ then num = "one"    
+    elsif n_s =~ /^2/ then num = "two"
+    elsif n_s =~ /^3/ then num = "three"
+    elsif n_s =~ /^4/ then num = "four"  
+    elsif n_s =~ /^5/ then num = "five"
+    elsif n_s =~ /^6/ then num = "six"  
+    elsif n_s =~ /^7/ then num = "seven"
+    elsif n_s =~ /^8/ then num = "eight"
+    elsif n_s =~ /^9/ then num = "nine"
     else
-      @english = ""     
+      num = ""     
     end
-    p @english
+    @num_as_word = num
   end
-  def get_digit(num)
+  
+  def convert_single_digit
     # get the second digit
-      n_s = num.to_s
+      p "converting the single digit"
+      n_s = @current_num.to_s
       n_s = n_s[-1,1] # gets last digit
-      n_s = n_s.to_i
+      @tmp_num = n_s.to_i
+      p "that single digit is: " + n_s.to_s
       # convert it using gen_single
-      poo = gen_single(n_s)
+      gen_single(@tmp_num)
       # if poo ends in "t", cut off the t
-      if poo =~ /t/
-        poo = poo.chop
+      if @num_as_word =~ /t/
+        @num_as_word = @num_as_word.chop
       end
+
   end
+  
   def gen_duple(num)
-    if num === 10 then english = "ten"
-    elsif num === 11 then english = "eleven"
-    elsif num === 12 then english = "twelve"
-    elsif num === 13 then english = "thirteen"
-    elsif num === 14 then english = "fourteen"
-    elsif num === 15 then english = "fifteen"
-    elsif num >= 16 && num < 20
-      poo = get_digit(num)
-      # english = poo + "teen"  
+    # p "duple num: " + @current_num.to_s
+    #  p "@ current_num : " + @current_num.to_s
+    if @current_num === 10 then @num_as_word = "ten"
+    elsif @current_num === 11 then @num_as_word = "eleven"
+    elsif @current_num === 12 then @num_as_word = "twelve"
+    elsif @current_num === 13 then @num_as_word = "thirteen"
+    elsif @current_num === 14 then @num_as_word = "fourteen"
+    elsif @current_num === 15 then @num_as_word = "fifteen"
+    elsif @current_num >= 16 && @current_num < 20
+      convert_single_digit
+      p @current_num
+      @num_as_word = @num_as_word.to_s + "teen"  
+    elsif num >= 20 && num < 30
+      convert_single_digit
+      @num_as_word = "twenty" + @num_as_word.to_s
     end
-    p english
+    p "our number as a word: " + @num_as_word.to_s
   end
-  def gen_triple(num)
+  
+  def gen_triple
     
   end
+  
   def add_this_shit_up
-    eng_len = @english.length
+    eng_len = @num_as_word.to_s.length
     @sum += eng_len
   end
+  
   def build_words(num)
     num_len = num.to_s.length
     # p num_len
-    if num_len == 1 then gen_single(num)
-    elsif num_len == 2 then gen_duple(num)
-    elsif num_len == 3 then gen_triple(num)
+    if num_len == 1 then gen_single(@current_num)
+    elsif num_len == 2 then gen_duple(@current_num)
+    elsif num_len == 3 then gen_triple
     else
       p "poo!"  
     end
     add_this_shit_up
   end
 end
-solution = NumberInEnglish.new(1, 5, 0)
+
+solution = NumberAsWord.new(1, 29)
+
 p "our solution is " + solution.sum.to_s
