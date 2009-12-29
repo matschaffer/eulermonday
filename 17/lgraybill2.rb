@@ -34,6 +34,7 @@ class NumberAsWord
   end
   
   def gen_single(num)
+    p "gen_single" + num.to_s
     n_s = num.to_s
     #  could this be a hash table?
     if n_s =~ /^1/ then num = "one"    
@@ -52,43 +53,76 @@ class NumberAsWord
   end
   
   def convert_single_digit
-    # get the second digit
-      p "converting the single digit"
-      n_s = @current_num.to_s
+      n_s = @current_num.to_s || @tmp_num.to_s
       n_s = n_s[-1,1] # gets last digit
       @tmp_num = n_s.to_i
-      p "that single digit is: " + n_s.to_s
+      # p "that single digit is: " + n_s.to_s
       # convert it using gen_single
       gen_single(@tmp_num)
-      # if poo ends in "t", cut off the t
-      if @num_as_word =~ /t/
-        @num_as_word = @num_as_word.chop
-      end
 
   end
   
   def gen_duple(num)
     # p "duple num: " + @current_num.to_s
     #  p "@ current_num : " + @current_num.to_s
-    if @current_num === 10 then @num_as_word = "ten"
-    elsif @current_num === 11 then @num_as_word = "eleven"
-    elsif @current_num === 12 then @num_as_word = "twelve"
-    elsif @current_num === 13 then @num_as_word = "thirteen"
-    elsif @current_num === 14 then @num_as_word = "fourteen"
-    elsif @current_num === 15 then @num_as_word = "fifteen"
+    if @current_num === 10 then num = "ten"
+    elsif @current_num === 11 then num = "eleven"
+    elsif @current_num === 12 then num = "twelve"
+    elsif @current_num === 13 then num = "thirteen"
+    elsif @current_num === 14 then num = "fourteen"
+    elsif @current_num === 15 then num = "fifteen"
     elsif @current_num >= 16 && @current_num < 20
       convert_single_digit
-      p @current_num
+      # if @num_as_word ends in "t", cut off the t      
+      if @num_as_word =~ /\t/
+        @num_as_word.chop
+      end
       @num_as_word = @num_as_word.to_s + "teen"  
     elsif num >= 20 && num < 30
       convert_single_digit
       @num_as_word = "twenty" + @num_as_word.to_s
+    elsif num >= 30 && num < 40
+      convert_single_digit
+      @num_as_word = "thirty" + @num_as_word.to_s
+    elsif num >= 40 && num < 50
+      convert_single_digit
+      @num_as_word = "forty" + @num_as_word.to_s
+    elsif num >= 50 && num < 60
+      convert_single_digit
+      @num_as_word = "fifty" + @num_as_word.to_s
+    elsif num >= 60 && num < 70
+      convert_single_digit
+      @num_as_word = "sixty" + @num_as_word.to_s
+    elsif num >= 70 && num < 80
+      convert_single_digit
+      @num_as_word = "seventy" + @num_as_word.to_s
+    elsif num >= 80 && num < 90
+      convert_single_digit
+      @num_as_word = "eighty" + @num_as_word.to_s
+    elsif num >= 90 && num < 100
+      convert_single_digit
+      @num_as_word = "ninety" + @num_as_word.to_s
+
     end
-    p "our number as a word: " + @num_as_word.to_s
+    p @num_as_word.to_s
   end
-  
-  def gen_triple
-    
+  def convert_duple_digit
+      p "convert_duple_digit"
+      n_s = @current_num.to_s
+      n_s = n_s[-2,2] # gets last digit
+      p "n_s from duple: " + n_s.to_s
+      # if the first digit of n_s is 0
+      convert_single_digit
+      @tmp_num = n_s.to_i
+      # p "that single digit is: " + n_s.to_s
+      # convert it using gen_duple
+      gen_duple(@tmp_num)
+  end
+  def gen_triple(num)
+    p @current_num
+    if @current_num >= 100 && @current_num < 200
+      convert_duple_digit
+    end
   end
   
   def add_this_shit_up
@@ -101,7 +135,7 @@ class NumberAsWord
     # p num_len
     if num_len == 1 then gen_single(@current_num)
     elsif num_len == 2 then gen_duple(@current_num)
-    elsif num_len == 3 then gen_triple
+    elsif num_len == 3 then gen_triple(@current_num)
     else
       p "poo!"  
     end
@@ -109,6 +143,6 @@ class NumberAsWord
   end
 end
 
-solution = NumberAsWord.new(1, 29)
+solution = NumberAsWord.new(99, 124)
 
 p "our solution is " + solution.sum.to_s
