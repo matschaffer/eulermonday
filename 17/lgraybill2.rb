@@ -22,7 +22,10 @@ class NumberAsWord
     (@range).each do |n|
       @current_num = n
       build_words(@current_num)
+      p @num_as_word
+      @num_as_word = ""
     end
+    p "Final sum is: " + @sum.to_s
   end
   
   # Set variables
@@ -34,7 +37,7 @@ class NumberAsWord
   end
   
   def gen_single(num)
-    p "gen_single" + num.to_s
+    # p "gen_single" + num.to_s
     n_s = num.to_s
     #  could this be a hash table?
     if n_s =~ /^1/ then num = "one"    
@@ -63,21 +66,24 @@ class NumberAsWord
   end
   
   def gen_duple(num)
-    # p "duple num: " + @current_num.to_s
-    #  p "@ current_num : " + @current_num.to_s
-    if @current_num === 10 then num = "ten"
-    elsif @current_num === 11 then num = "eleven"
-    elsif @current_num === 12 then num = "twelve"
-    elsif @current_num === 13 then num = "thirteen"
-    elsif @current_num === 14 then num = "fourteen"
-    elsif @current_num === 15 then num = "fifteen"
-    elsif @current_num >= 16 && @current_num < 20
+    # p "duple num: " +num.to_s
+
+    if num === 10 then @num_as_word = "ten"
+    elsif num === 11 then @num_as_word = "eleven"
+    elsif num === 12 then @num_as_word = "twelve"
+    elsif num === 13 then @num_as_word = "thirteen"
+    elsif num === 14 then @num_as_word = "fourteen"
+    elsif num === 15 then @num_as_word = "fifteen"
+    elsif num >= 16 && num < 20
       convert_single_digit
-      # if @num_as_word ends in "t", cut off the t      
-      if @num_as_word =~ /\t/
-        @num_as_word.chop
+      # p @num_as_word
+      # # if @num_as_word ends in "t", cut off the t      
+      # if @num_as_word =~ /t/
+      #   @num_as_word.chop
+      # end
+      @num_as_word = @num_as_word.to_s + "teen" 
+      if @num_as_word == "eightteen" then @num_as_word = "eighteen" 
       end
-      @num_as_word = @num_as_word.to_s + "teen"  
     elsif num >= 20 && num < 30
       convert_single_digit
       @num_as_word = "twenty" + @num_as_word.to_s
@@ -102,26 +108,68 @@ class NumberAsWord
     elsif num >= 90 && num < 100
       convert_single_digit
       @num_as_word = "ninety" + @num_as_word.to_s
-
     end
-    p @num_as_word.to_s
   end
+
   def convert_duple_digit
-      p "convert_duple_digit"
+      # p "convert_duple_digit" + @current_num.to_s
       n_s = @current_num.to_s
-      n_s = n_s[-2,2] # gets last digit
-      p "n_s from duple: " + n_s.to_s
-      # if the first digit of n_s is 0
-      convert_single_digit
-      @tmp_num = n_s.to_i
-      # p "that single digit is: " + n_s.to_s
-      # convert it using gen_duple
-      gen_duple(@tmp_num)
+      lst_n = n_s[-1,1] # gets last digit
+      scnd_n = n_s[-2,1] # gets second digit
+      dupl_n = scnd_n + lst_n # that's the two-digit num
+
+      # p "lst_n: " + lst_n
+      # p "scnd_n: " + scnd_n.to_s
+      # p "dupl_n: " + dupl_n
+
+      if scnd_n.to_i === 0
+        # if the first digit of n_s is 0
+        @tmp_num = lst_n.to_i   
+        gen_single(@tmp_num)
+      else
+        @tmp_num = dupl_n.to_i
+        gen_duple(@tmp_num)
+      end
   end
+
   def gen_triple(num)
-    p @current_num
-    if @current_num >= 100 && @current_num < 200
+    # p @current_num
+    if @current_num === 100 then @num_as_word = "onehundred"
+    elsif @current_num > 100 && @current_num < 200
       convert_duple_digit
+      @num_as_word = "onehundredand" + @num_as_word.to_s
+    elsif @current_num === 200 then @num_as_word = "twohundred"
+    elsif @current_num > 200 && @current_num < 300
+      convert_duple_digit
+      @num_as_word = "twohundredand" + @num_as_word.to_s
+    elsif @current_num === 300 then @num_as_word = "threehundred"
+    elsif @current_num > 300 && @current_num < 400
+      convert_duple_digit
+      @num_as_word = "threehundredand" + @num_as_word.to_s
+    elsif @current_num === 400 then @num_as_word = "fourhundred"
+    elsif @current_num > 400 && @current_num < 500
+      convert_duple_digit
+      @num_as_word = "fourhundredand" + @num_as_word.to_s
+    elsif @current_num === 500 then @num_as_word = "fivehundred"
+    elsif @current_num > 500 && @current_num < 600
+      convert_duple_digit
+      @num_as_word = "fivehundredand" + @num_as_word.to_s
+    elsif @current_num === 600 then @num_as_word = "sixhundred"
+    elsif @current_num > 600 && @current_num < 700
+      convert_duple_digit
+      @num_as_word = "sixhundredand" + @num_as_word.to_s
+    elsif @current_num === 700 then @num_as_word = "sevenhundred"
+    elsif @current_num > 700 && @current_num < 800
+      convert_duple_digit
+      @num_as_word = "sevenhundredand" + @num_as_word.to_s
+    elsif @current_num === 800 then @num_as_word = "eighthundred"
+    elsif @current_num > 800 && @current_num < 900
+      convert_duple_digit
+      @num_as_word = "eighthundredand" + @num_as_word.to_s
+    elsif @current_num === 900 then @num_as_word = "ninehundred"
+    elsif @current_num > 900 && @current_num < 1000
+      convert_duple_digit
+      @num_as_word = "ninehundredand" + @num_as_word.to_s                                    
     end
   end
   
@@ -136,6 +184,7 @@ class NumberAsWord
     if num_len == 1 then gen_single(@current_num)
     elsif num_len == 2 then gen_duple(@current_num)
     elsif num_len == 3 then gen_triple(@current_num)
+    elsif num === 1000 then @num_as_word = "onethousand"
     else
       p "poo!"  
     end
@@ -143,6 +192,4 @@ class NumberAsWord
   end
 end
 
-solution = NumberAsWord.new(99, 124)
-
-p "our solution is " + solution.sum.to_s
+solution = NumberAsWord.new(1, 1000)
