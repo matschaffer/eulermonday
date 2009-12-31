@@ -3,10 +3,10 @@ class Euler17
   def initialize(min, max)
     @range = (min..max)
     @sum = 0
-    (@range).each do |n|
+    @range.each do |n|
       @current_num = n
       assign_word(@current_num)
-      # p @word
+      # p @word # uncomment to see the numbers written out as words
       add_this_shiz_up
     end
   end
